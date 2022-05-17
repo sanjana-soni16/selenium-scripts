@@ -73,6 +73,8 @@ spec:
           value: toolchain-apikey
         - name: repository
           value: $(params.repository)
+        - name: branch
+          value: main
         - name: directory-name          
           value: "tutorial"
       workspaces:
