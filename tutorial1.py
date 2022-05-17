@@ -7,7 +7,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 service = Service(executable_path=ChromeDriverManager().install())
 
-driver = webdriver.Chrome(executable_path=service)
+driver = webdriver.Chrome(service=service)
 
 # PATH = "/Users/sanjana/chromedriver"
 
