@@ -1,11 +1,14 @@
-
+import os
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-PATH = "/Users/sanjana/chromedriver"
+# PATH = "/Users/sanjana/chromedriver"
 
-driver = webdriver.Chrome(service=Service(PATH))
+print("Path : ",os.path)
+driver = webdriver.Chrome(service=Service(os.path))
+
+# driver = webdriver.Chrome(service=Service(PATH))
 
 driver.get("https://www.google.com")
 
