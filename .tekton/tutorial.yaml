@@ -1,0 +1,115 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: TriggerTemplate
+metadata:
+  name: tutorial-template
+spec:
+  params:
+    - name: repository
+      description: git repo
+  resourcetemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: pipelinerun-$(uid)-pvc
+      spec:
+        resources:
+          requests:
+            storage: 5Gi
+        volumeMode: Filesystem
+        accessModes:
+          - ReadWriteOnce
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        name: pipelinerun-$(uid)
+      spec:
+        pipelineRef:
+          name: tutorial-pipeline
+        params:
+          - name: repository
+            value: "https://github.com/sanjana-soni16/selenium-scripts.git"
+        workspaces:
+          - name: pipeline-ws
+            persistentVolumeClaim:
+              claimName: pipelinerun-$(uid)-pvc
+---
+apiVersion: tekton.dev/v1beta1
+kind: TriggerBinding
+metadata:
+  name: tutorial-binding
+spec:
+  params:
+    - name: repository
+      type: string
+---
+apiVersion: tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: tutorial-listener
+spec:
+  triggers:
+    - binding:
+        name: tutorial-binding
+      template:
+        name: tutorial-template
+---
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: tutorial-pipeline
+spec:
+  params:
+    - name: repository
+      description: the git repo 
+  workspaces:
+    - name: pipeline-ws
+  tasks:   
+    - name: git-clone
+      taskRef:
+        name: git-clone-repo
+      params:
+        - name: ibmcloud-apikey-secret-key
+          value: toolchain-apikey
+        - name: repository
+          value: $(params.repository)
+        - name: directory-name          
+          value: "tutorial"
+      workspaces:
+        - name: output
+          workspace: pipeline-ws      
+    - name: tutorial-task
+      runafter: [git-clone]
+      workspaces:
+        - name: output
+          workspace: pipeline-ws
+      taskRef:
+        name: tutorial-task
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: tutorial-task
+spec:
+  workspaces:
+  - name: output
+    mountPath: /artifacts
+  steps:
+    - name: tutorial
+      image: ibmcom/pipeline-base-image
+      command: ["/bin/bash", "-c"]
+      args:
+        - |
+          set -e -o pipefail
+
+          echo "------------------"
+          pwd
+          echo "------------------"
+
+          apt-get -y update;
+          apt-get -y install python3;
+          apt-get -y install python3-pip;
+
+          cd tutorial
+          pip3 install -r requirements.txt
+          python3 tutorial1.py
