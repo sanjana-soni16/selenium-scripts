@@ -3,6 +3,8 @@ import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+import chromedriver_binary
+
 from webdriver_manager.chrome import ChromeDriverManager
 
 service = Service(executable_path=ChromeDriverManager().install())
