@@ -5,8 +5,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 # PATH = "/Users/sanjana/chromedriver"
 
-print("Path : ",os.path)
-driver = webdriver.Chrome(service=Service(os.path))
+driver = webdriver.Chrome()
 
 # driver = webdriver.Chrome(service=Service(PATH))
 
