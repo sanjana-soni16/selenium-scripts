@@ -74,7 +74,7 @@ spec:
         - name: repository
           value: $(params.repository)
         - name: branch
-          value: main
+          value: selenium-test
         - name: directory-name          
           value: "tutorial"
       workspaces:
@@ -98,22 +98,24 @@ spec:
     mountPath: /artifacts
   steps:
     - name: tutorial
-      image: selenium/standalone-chrome:3.141.59-20210929
-      command: ["/bin/sh", "-c"]
+      image: ibmcom/pipeline-base-image
+      command: ["/bin/bash", "-c"]
       args:
         - |
-          set -e -o pipefail
-
-          echo "------------------"
-          pwd
-          echo "------------------"
-
+          cd /artifacts
           apt-get -y update;
-          apt-get -y install python3;
+          apt install software-properties-common -y
+          add-apt-repository ppa:deadsnakes/ppa -y
+          apt-get -y install python3.9;
+          echo "apt-get -y install python3-pip;"
           apt-get -y install python3-pip;
-
-          ls tutorial/ 
-
+          apt-get -y install python3.9-venv
+          ls
+          python3.9 -m venv venv
+          . venv/bin/activate
+          python3 -V
+          ls tutorial/
           cd tutorial
           pip3 install -r requirements.txt
+          ls tutorial/
           python3 tutorial1.py
