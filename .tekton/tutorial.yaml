@@ -100,9 +100,10 @@ spec:
     - name: tutorial
       image: selenium/standalone-chrome:3.141.59-20210929
       imagePullPolicy: Always
-      command: ["sudo /bin/sh", "-c"]
+      command: ["/bin/bash", "-c"]
       args:
-        - apt-get -y update;
+        - set -e -o pipefail;
+          apt-get -y update;
           apt-get -y install python3;
           apt-get -y install python3-pip;
 
