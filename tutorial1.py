@@ -6,10 +6,13 @@ from selenium.webdriver.common.by import By
 import chromedriver_binary
 
 from webdriver_manager.chrome import ChromeDriverManager
-
 service = Service(executable_path=ChromeDriverManager().install())
 
-driver = webdriver.Chrome(service=service)
+options = webdriver.ChromeOptions()
+options.headless = False
+driver = webdriver.Remote(
+    command_executor=f"http://localhost:4444/wd/hub", options=options)
+# driver = webdriver.Chrome(service=service)
 
 # PATH = "/Users/sanjana/chromedriver"
 

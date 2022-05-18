@@ -1,4 +1,3 @@
-selenium==4.1.3
+selenium
 webdriver-manager
-chromedriver-py
 chromedriver-binary
