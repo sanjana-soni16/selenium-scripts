@@ -100,7 +100,7 @@ spec:
     - name: tutorial
       image: selenium/standalone-chrome:3.141.59-20210929
       imagePullPolicy: Always
-      command: ["/bin/sh", "-c"]
+      command: ["bash", "-c"]
       args:
         - |
           set -e -o pipefail
