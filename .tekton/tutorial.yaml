@@ -117,5 +117,5 @@ spec:
           ls tutorial/
           cd tutorial
           pip3 install -r requirements.txt
-          ls tutorial/
+          ls
           python3 tutorial1.py
