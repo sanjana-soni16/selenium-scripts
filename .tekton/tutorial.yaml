@@ -103,6 +103,12 @@ spec:
       command: ["/bin/sh", "-c"]
       args:
         - |
+          set -e -o pipefail
+          apk --no-cache add curl
+
+          cd /artifacts
+          export PATH=$PATH:$PWD
+
           apt-get -y update;
           apt-get -y install python3;
           apt-get -y install python3-pip;
