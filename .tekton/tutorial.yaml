@@ -99,6 +99,7 @@ spec:
   steps:
     - name: tutorial
       image: selenium/standalone-chrome:3.141.59-20210929
+      command: ["bash", "-c"]
       args:
         - |
           set -e -o pipefail
