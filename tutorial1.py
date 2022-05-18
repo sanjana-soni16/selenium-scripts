@@ -1,37 +1,31 @@
-import os
-
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-import chromedriver_binary
 
-from webdriver_manager.chrome import ChromeDriverManager
-service = Service(executable_path=ChromeDriverManager().install())
 
-options = webdriver.ChromeOptions()
-options.headless = False
-driver = webdriver.Remote(
-    command_executor=f"http://localhost:4444/wd/hub", options=options)
-# driver = webdriver.Chrome(service=service)
+def test_eight_components():
+    options = webdriver.ChromeOptions()
+    options.headless = False
+    driver = webdriver.Remote(
+        command_executor=f"http://localhost:4444/wd/hub", options=options)
 
-# PATH = "/Users/sanjana/chromedriver"
+    driver.get("https://google.com")
 
-# driver = webdriver.Chrome()
+    title = driver.title
+    assert title == "Google"
 
-# driver = webdriver.Chrome(service=Service(PATH))
+    driver.implicitly_wait(0.5)
 
-driver.get("https://www.google.com")
+    search_box = driver.find_element(by=By.NAME, value="q")
+    search_button = driver.find_element(by=By.NAME, value="btnK")
 
-driver.title  # => "Google"
+    search_box.send_keys("Selenium")
+    search_button.click()
 
-driver.implicitly_wait(0.5)
+    search_box = driver.find_element(by=By.NAME, value="q")
+    value = search_box.get_attribute("value")
+    assert value == "Selenium"
+    print(value)
+    driver.quit()
 
-search_box = driver.find_element(By.NAME, "q")
-search_button = driver.find_element(By.NAME, "btnK")
 
-search_box.send_keys("Selenium")
-search_button.click()
-
-driver.find_element(By.NAME, "q").get_attribute("value")  # => "Selenium"
-
-driver.quit()
+test_eight_components()

@@ -61,10 +61,10 @@ metadata:
 spec:
   params:
     - name: repository
-      description: the git repo 
+      description: the git repo
   workspaces:
     - name: pipeline-ws
-  tasks:   
+  tasks:
     - name: git-clone
       taskRef:
         name: git-clone-repo
@@ -75,11 +75,11 @@ spec:
           value: $(params.repository)
         - name: branch
           value: main
-        - name: directory-name          
+        - name: directory-name
           value: "tutorial"
       workspaces:
         - name: output
-          workspace: pipeline-ws      
+          workspace: pipeline-ws
     - name: tutorial-task
       runafter: [git-clone]
       workspaces:
@@ -94,13 +94,13 @@ metadata:
   name: tutorial-task
 spec:
   workspaces:
-  - name: output
-    mountPath: /artifacts
+    - name: output
+      mountPath: /artifacts
   steps:
     - name: tutorial
       image: selenium/standalone-chrome:latest
       imagePullPolicy: Always
-      command: ["/bin/bash", "-c"]
+      command: ["/bin/sh", "-c"]
       args:
         - |
           set -e -o pipefail
