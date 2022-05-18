@@ -98,21 +98,17 @@ spec:
     mountPath: /artifacts
   steps:
     - name: tutorial
-      image: selenium/standalone-chrome:3.141.59-20210929
+      image: selenium/standalone-chrome:latest
       imagePullPolicy: Always
       command: ["/bin/bash", "-c"]
       args:
         - |
           set -e -o pipefail
 
-          USER root
-
           apt-get -y update;
           apt-get -y install python3;
           apt-get -y install python3-pip;
-          curl
-          USER 1001
-          
+
           cd /artifacts
           ls tutorial/
           cd tutorial
