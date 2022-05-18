@@ -98,7 +98,7 @@ spec:
       mountPath: /artifacts
   steps:
     - name: tutorial
-      image: selenium/standalone-chrome:latest
+      image: selenium/standalone-chrome:3.141.59-20210929
       imagePullPolicy: Always
       command: ["/bin/sh", "-c"]
       args:
