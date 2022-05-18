@@ -102,9 +102,7 @@ spec:
       imagePullPolicy: Always
       command: ["/bin/sh", "-c"]
       args:
-        - set -e -o pipefail;
-
-          apt-get -y update;
+        - apt-get -y update;
           apt-get -y install python3;
           apt-get -y install python3-pip;
 
