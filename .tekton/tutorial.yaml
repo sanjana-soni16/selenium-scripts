@@ -118,4 +118,5 @@ spec:
           cd tutorial
           pip3 install -r requirements.txt
           ls
+          env
           python3 tutorial1.py
