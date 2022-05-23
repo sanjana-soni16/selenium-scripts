@@ -97,8 +97,15 @@ spec:
     - name: output
       mountPath: /artifacts
   sidecars:
-    - name: sidecar
+    - name: selenium
       image: selenium/standalone-chrome:3.141.59-20210929
+      readinessProbe:
+        httpGet:
+          scheme: HTTP
+          port: 4444
+          path: /wd/hub
+        initialDelaySeconds: 2
+        periodSeconds: 10
   steps:
     - name: tutorial
       image: ibmcom/pipeline-base-image
