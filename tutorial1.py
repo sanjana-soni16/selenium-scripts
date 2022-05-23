@@ -6,7 +6,7 @@ def test_eight_components():
     options = webdriver.ChromeOptions()
     options.headless = False
     driver = webdriver.Remote(
-        command_executor=f"http://localhost:4646/wd/hub", options=options)
+        command_executor=f"http://localhost:4444/wd/hub", options=options)
 
     driver.get("https://google.com")
 
