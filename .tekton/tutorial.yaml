@@ -96,14 +96,9 @@ spec:
   workspaces:
     - name: output
       mountPath: /artifacts
-  params:
-    - name: sidecar-image
-      type: string
-      value: selenium/standalone-chrome:3.141.59-20210929
-      description: Image name of the sidecar container
   sidecars:
     - name: sidecar
-      image: $(params.sidecar-image) 
+      image: selenium/standalone-chrome:3.141.59-20210929
   steps:
     - name: tutorial
       image: ibmcom/pipeline-base-image
