@@ -96,6 +96,14 @@ spec:
   workspaces:
     - name: output
       mountPath: /artifacts
+  steps:
+    - name: check-ready
+      image: ubuntu
+      # The step will only succeed if the sidecar has written this file, which
+      # it does 5s after it starts, before it reports Ready.
+      script: |
+        apt-get update && apt-get install -y curl
+        curl http://localhost:4444/wd/hub
   sidecars:
     - name: selenium
       image: selenium/standalone-chrome:3.141.59-20210929
@@ -106,19 +114,3 @@ spec:
           path: /wd/hub
         initialDelaySeconds: 2
         periodSeconds: 10
-  steps:
-    - name: tutorial
-      image: ibmcom/pipeline-base-image
-      imagePullPolicy: Always
-      command: ["/bin/bash", "-c"]
-      args:
-        - |
-          set -e -o pipefail
-
-          sudo apt-get -y update;
-          sudo apt-get -y install python3;
-          sudo apt-get -y install python3-pip;
-          cd "/artifacts"
-          cd "tutorial"
-          pip3 install -r requirements.txt
-          python3 tutorial1.py
